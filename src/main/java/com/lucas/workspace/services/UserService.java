@@ -32,7 +32,26 @@ public class UserService {
 		return userRepository.insert(user);
 	}
 	
+	public void delete(String id) {
+		findById(id);
+		userRepository.deleteById(id);
+	}
+	
 	public User fromDto(UserDto user) {
-		return new User(user.getId(),user.getEmail(),user.getEmail());
+		return new User(user.getId(),user.getName(),user.getEmail());
+	}
+	
+	public User update(User obj) {
+		User newUser = userRepository.findById(obj.getId()).orElseThrow(() -> 
+		new ObjectNotFoundException("Usuário não encontrado"));
+	    updateData(newUser, obj);
+		return userRepository.save(newUser);
+		
+	}
+
+	private void updateData(User newUser, User obj) {
+		newUser.setEmail(obj.getEmail());
+		newUser.setName(obj.getName());
+		
 	}
 }
