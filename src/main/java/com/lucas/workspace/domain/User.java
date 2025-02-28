@@ -1,9 +1,12 @@
 package com.lucas.workspace.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //INDICANDO QUE É UMA COLEÇÃO DO MONGODB
@@ -16,6 +19,11 @@ public class User implements Serializable{
 	private String id;
 	private String name;
 	private String email;
+	
+	/*SERVE PARA QUANDO BUSCAR UM POST RELACIONADO AO USUARIO NO BANCO DE DADOS, NÃO CARREGAR TUDO,
+	 * E SIM SÓ OS POSTS QUE FOREM SENDO ACESSADOS*/
+	@DBRef(lazy =true)
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 		
@@ -55,6 +63,14 @@ public class User implements Serializable{
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
