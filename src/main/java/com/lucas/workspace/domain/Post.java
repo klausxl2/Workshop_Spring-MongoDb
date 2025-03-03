@@ -1,13 +1,16 @@
 package com.lucas.workspace.domain;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.lucas.workspace.dto.AuthorDto;
+import com.lucas.workspace.dto.CommentDTO;
 
 //NOME DA TABELA NO BANCO MONGO
 @Document(collection= "Post")
@@ -20,6 +23,7 @@ public class Post {
 	private String title;
 	private String body;
 	private AuthorDto AuthorDto;
+	private List<CommentDTO> comments  = new ArrayList<>();
 	
 	public Post() {
 		
@@ -72,6 +76,13 @@ public class Post {
 
 	public void setAuthorDto(AuthorDto AuthorDto) {
 		this.AuthorDto = AuthorDto;
+	}
+	public List<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentDTO> comments) {
+		this.comments = comments;
 	}
 
 	@Override
